@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Bases de datos con MySQL/MariaDB</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/assets/favicon.png?v=6223d55c38">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css?v=6223d55c38" />
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+    <link rel="canonical" href="http://escribocodigo.com/bases-de-datos-con-mysqlmariadb/" />
+    
+    <meta property="og:site_name" content="EscriboCodigo" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Bases de datos con MySQL/MariaDB" />
+    <meta property="og:description" content="Bienvenido a esta serie de entradas donde abordaremos lo básico para trabajar con Bases de Datos utilizando el motor MySQL/MariaDB, en esta serie aprenderemos las características y componentes de una BD relacional al igual que las operaciones básicas para..." />
+    <meta property="og:url" content="http://escribocodigo.com/bases-de-datos-con-mysqlmariadb/" />
+    <meta property="article:published_time" content="2015-07-18T19:55:46.728Z" />
+    <meta property="article:modified_time" content="2015-09-21T14:53:02.943Z" />
+    <meta property="article:tag" content="Bases de Datos" />
+    <meta property="article:tag" content="MySQL" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Bases de datos con MySQL/MariaDB" />
+    <meta name="twitter:description" content="Bienvenido a esta serie de entradas donde abordaremos lo básico para trabajar con Bases de Datos utilizando el motor MySQL/MariaDB, en esta serie aprenderemos las características y componentes de una BD relacional al igual que las operaciones básicas para..." />
+    <meta name="twitter:url" content="http://escribocodigo.com/bases-de-datos-con-mysqlmariadb/" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "EscriboCodigo",
+    "author": {
+        "@type": "Person",
+        "name": "Plus",
+        "url": "http://escribocodigo.com/author/plus",
+        "sameAs": null,
+        "description": null
+    },
+    "headline": "Bases de datos con MySQL/MariaDB",
+    "url": "http://escribocodigo.com/bases-de-datos-con-mysqlmariadb/",
+    "datePublished": "2015-07-18T19:55:46.728Z",
+    "dateModified": "2015-09-21T14:53:02.943Z",
+    "keywords": "Bases de Datos, MySQL",
+    "description": "Bienvenido a esta serie de entradas donde abordaremos lo básico para trabajar con Bases de Datos utilizando el motor MySQL/MariaDB, en esta serie aprenderemos las características y componentes de una BD relacional al igual que las operaciones básicas para..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.6" />
+    <link rel="alternate" type="application/rss+xml" title="EscriboCodigo" href="http://escribocodigo.com/rss/" />
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/prism.css?v=6223d55c38" />
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-60978861-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body class="post-template tag-bases-de-datos tag-mysql">
+
+    <div id="sidebar" >
+        <div id="sidebar-content" class="inner">
+            
+            <h2 class="blog-title"><a href="http://escribocodigo.com">EscriboCodigo</a></h2>
+            <h3 class="blog-description">Blog sobre programación, tutoriales, desarrollo web y más</h3>
+
+            <form id="search">
+                <input id="search-field" placeholder="Search"/>
+            </form>
+
+            <div id="sidebar-links">
+                <ul id="subscription-links">
+                    <li><a target="_blank" href="http://escribocodigo.com/rss/"><i class="fa fa-rss"></i> Subscribe via RSS</a></li>
+                    <!-- No support yet
+                    <li><a target="_blank" href=" "><i class="fa fa-envelope"></i> Subscribe via email<a></li>
+                    -->
+                </ul>
+                <ul id="sidebar-internal">
+                    <!-- For 'About' and other pages -->
+                </ul>
+                <ul id="sidebar-external">
+                    <!--
+<li class="external-link"><a href="https://github.com/"><i class="fa fa-github"></i> GitHub</a></li>
+<li class="external-link"><a href="https://www.linkedin.com/profile/view?id="><i class="fa fa-linkedin"></i> LinkedIn</a></li>
+-->
+<li class="external-link"><a target="_blank" href="https://twitter.com/Plus_rt"><i class="fa fa-twitter"></i> Twitter</a></li>
+<li class="external-link"><a target="_blank" href="http://escribocodigo.com/contacto/"><i class="fa fa-envelope"></i> Contacto</a></li>
+<li class="external-link"><a target="_blank" href="https://www.facebook.com/escribocodigo"><i class="fa fa-facebook"></i> Facebook</a></li>
+<!--
+<li class="external-link"><a href="https://plus.google.com/+"><i class="fa fa-google-plus"></i> Google+</a></li>
+<li class="external-link"><a href="https://www.youtube.com/user/"><i class="fa fa-youtube-play"></i> YouTube</a></li>
+<li class="external-link"><a target="_blank" href="http://escribocodigo.com/contacto/"><i class="fa fa-envelope"></i> Contacto</a></li>
+
+<li class="external-link"><a href="http://www.last.fm/user/">Last.fm</a></li>
+<li class="external-link"><a href="http://steamcommunity.com/id/">Steam</a></li>
+-->
+                </ul>
+            </div>
+
+            <footer class="site-footer">
+                <section class="copyright">&copy; 2016 Esta obra está bajo una <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" rel="nofollow">Licencia Creative Commons Atribución-NoComercial 4.0 Internacional</a>.
+</section>
+                <section class="poweredby">Proudly published with <a class="icon-ghost" href="https://ghost.org" rel="nofollow">Ghost</a></section>
+                <section class="theme-credits"><a href="https://github.com/dlecina/StayPuft" rel="nofollow">StayPuft theme</a> by David Lecina</section>
+            </footer>
+        </div>
+    </div>
+
+    <main>
+        <div class="main-inner">
+            <section id="results"></section>
+            
+
+<article class="post tag-bases-de-datos tag-mysql">
+
+
+        <header class="post-header">
+
+            <h1 class="post-title">Bases de datos con MySQL/MariaDB</h1>
+            
+            <section class="post-meta">
+                <span class="post-time">
+                    <i class='fa fa-calendar'></i>
+                    <time datetime="2015-07-18" class="timeago">10 months ago</time>
+                    <time datetime="2015-07-18" class="fulldate">July 18th, 2015</time>
+                </span>
+                <br><i class='fa fa-tag'></i> <a href="/tag/bases-de-datos/">Bases de Datos</a> · <a href="/tag/mysql/">MySQL</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Bienvenido a esta serie de entradas donde abordaremos lo básico para trabajar con Bases de Datos utilizando el motor <strong>MySQL/MariaDB</strong>, en esta serie aprenderemos las características y componentes de una BD <strong>relacional</strong> al igual que las operaciones básicas para la gestión de bases de datos. </p>
+
+<p>¿Que es lo que no veremos?, temas de diseño de DB, cosas como el modelo entidad relación/relacional, normalización, etc. Estos son temas para otra oportunidad :).</p>
+
+<p>Los temas abordados son:</p>
+
+<ol>
+<li>Introducción (este post).  </li>
+<li><a href="http://escribocodigo.com/tipos-de-datos-mysql/">Tipos de datos</a>.  </li>
+<li><a href="http://escribocodigo.com/herramientas-para-trabajar-con-mysql/">Herramientas para trabajar</a>  </li>
+<li><a href="http://escribocodigo.com/usuarios-y-permisos-en-mysql/">Usuarios y permisos</a>. <br />
+Como crear e importar una base de datos (Siguiente artiulo).</li>
+</ol>
+
+<h2 id="introduccin">Introducción</h2>
+
+<p>¿Que es MariaDB?</p>
+
+<p>Es un <strong>Sistema Gestor de Bases de Datos</strong>, comúnmente conocido como "Base de datos" a secas.</p>
+
+<p>Una Base de datos es básicamente una colección de datos, pudiendo estos ser de distinto tipo o índole.</p>
+
+<p>MariaDB entonces es, un gestor que trabaja con bases de datos relacionales, es decir que cumplen con el modelo relacional. Es importante mencionar que MariaDB es un fork de MySQL, que surgió debido al suceso de compra de Sun por parte de Oracle, por lo que lo que hagamos en MySQL funciona de igual forma en Maria.</p>
+
+<p>Por supuesto no es el único gestor, en esta categoría podemos mencionar también a: <br />
+PostgreSQL. <br />
+Oracle. <br />
+Microsoft SQL Server. <br />
+Entre otros.</p>
+
+<p>Aunque MySQL es uno de los gestores mas utilizados hoy en día, abordaremos este "curso" utilizando su fork Maria. Como se menciono funcionan de la misma manera. </p>
+
+<p>Cabe mencionar que todos los temas se desarrollan en un entorno GNU/Linux, pero los pasos son los mismos que en Windows.</p>
+
+<p>Como una segunda nota, para agilizar algunas tareas y para tener ejemplos mas consistentes se utilizara un base de datos ya creada. En la web de MySQL podemos encontrar bases de datos de muestra que podemos utilizar, para esta serie utilizaremos la <a href="http://downloads.mysql.com/docs/world.sql.zip">World Database</a>, pueden descargar el archivo SQL del enlace.</p>
+
+<p>Para utilizar un archivo .sql no hace falta más que ir al software que utilicemos para manejar nuestra BD y utilizar la opción importar, sin embargo se mostrara como hacer la importación de esta DB ya lista en el post que abordara el tema de creación de tablas y atributos.</p>
+
+<p>Hasta aquí la introducción, esperen la siguiente entrada donde veremos que tipos de datos podemos almacenar en una BD.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+                <section class="author">
+                    <h4><a href="/author/plus/">Plus</a></h4>
+
+                        <p>Read <a href="/author/plus/">more posts</a> by this author.</p>
+                    <div class="author-meta">
+                        
+                        
+                    </div>
+                </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <div class="share-icons">
+                    <a class="fa fa-twitter-square" href="https://twitter.com/share?text=Bases%20de%20datos%20con%20MySQL%2FMariaDB&amp;url=http://escribocodigo.com/bases-de-datos-con-mysqlmariadb/"
+                        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                        <span class="hidden">Twitter</span>
+                    </a>
+                    <a class="fa fa-facebook-square" href="https://www.facebook.com/sharer/sharer.php?u=http://escribocodigo.com/bases-de-datos-con-mysqlmariadb/"
+                        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                        <span class="hidden">Facebook</span>
+                    </a>
+                    <a class="fa fa-google-plus-square" href="https://plus.google.com/share?url=http://escribocodigo.com/bases-de-datos-con-mysqlmariadb/"
+                       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                        <span class="hidden">Google+</span>
+                    </a>
+                </div>
+            </section>
+
+        </footer>
+
+        <section class="post-comments">
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                var disqus_shortname = 'escribocodigo'; // required: replace example with your forum shortname
+
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </section>
+
+
+</article>
+        </div>
+    </main>
+
+    <script src="/public/jquery.min.js?v=6223d55c38"></script>
+
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js?v=6223d55c38"></script>
+    <script type="text/javascript" src="/assets/js/index.js?v=6223d55c38"></script>
+    <script type="text/javascript" src="/assets/js/prism-loader.js?v=6223d55c38"></script>
+    <script type="text/javascript" src="/assets/js/prism.js?v=6223d55c38"></script>
+    <script src="/assets/js/jquery.ghostHunter.min.js?v=6223d55c38"></script>
+    <script>
+        $("#search-field").ghostHunter({
+            rss : "http://escribocodigo.com/rss/",
+            results : "#results",
+            onKeyUp : true,
+            zeroResultsInfo : false
+        });
+    </script>
+</body>
+
+</html>
