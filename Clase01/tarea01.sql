@@ -1,0 +1,6 @@
+CREATE DATABASE clss01;
+USE clss01;
+CREATE TABLE Fabricantes (id INT PRIMARY KEY,nombre VARCHAR(50));
+CREATE TABLE Articulos (id INT PRIMARY KEY,nombre VARCHAR(50));
+
+
