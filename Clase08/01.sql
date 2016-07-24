@@ -1,5 +1,4 @@
 -- Procedimientos almacenados
--- 
 
 CREATE DATABASE got;
 USE got;
@@ -14,11 +13,11 @@ CREATE TABLE personajes (
 id INT PRIMARY KEY AUTO_INCREMENT,
 nombre VARCHAR(50) NOT NULL,
 id_familia INT NOT NULL,
-CONSTRAINT fk_per_fam FOREIGN KEY (id_familia) 
+CONSTRAINT fk_per_fam FOREIGN KEY (id_familia)
 REFERENCES familia(id)
 );
 
-INSERT INTO familia 
+INSERT INTO familia
 VALUES (NULL, 'Stark', 'Winter is coming'),
 (NULL, 'Baratheon', 'Ours is the fury'),
 (NULL, 'Lannister', 'Hear me roar'),
@@ -91,7 +90,7 @@ VALUES (NULL, 'Eddard', 1),
 
 
 
-DELIMITER // 
+DELIMITER //
 CREATE PROCEDURE obtenerTodosPersonajes()
     BEGIN
         SELECT * FROM personajes;
@@ -216,19 +215,19 @@ OUT lannister INT,
 OUT targaryen INT)
     BEGIN
         -- Stark
-        SELECT COUNT(*) INTO stark 
+        SELECT COUNT(*) INTO stark
         FROM personajes
         WHERE id_familia = 1
         AND nombre LIKE CONCAT('%',patron,'%');
 
         -- Lanister
-        SELECT COUNT(*) INTO stark 
+        SELECT COUNT(*) INTO stark
         FROM personajes
         WHERE id_familia = 1
         AND nombre LIKE CONCAT('%',patron,'%');
 
         -- Targaryen
-        SELECT COUNT(*) INTO targaryen 
+        SELECT COUNT(*) INTO targaryen
         FROM personajes
         WHERE id_familia = 7
         AND nombre LIKE CONCAT('%',patron,'%');
@@ -283,3 +282,47 @@ CREATE PROCEDURE EjemploCursor (IN patron VARCHAR(255), OUT conteo INT)
         END LOOP validar_nombre;
     END $$
 DELIMITER ;
+
+-- Creacion de CURSOR --
+-- Clase del 8 de Julio de 2016
+
+DELIMITER $$
+CREATE PROCEDURE targaryen_d ()
+  BEGIN
+      DECLARE nom VARCHAR(50);
+
+      DECLARE cursor_nombres_a CURSOR FOR
+      SELECT nombre FROM personajes
+      WHERE nombre LIKE 'D%';
+
+      DECLARE CONTINUE MANDLER FOR NOT FOUND SET @salida = 1;
+
+      OPEN cursor_nombres_d;
+      bucle: LOOP
+            FETCH cursor_nombres_d INTO nom;
+            IF salida = 1 THEN
+              LEAVE bucle;
+            END IF;
+            INSERT INTO personajes_d VALUES(nom);
+      END LOOP bucle;
+  END $$
+DELIMITER
+
+show create table personajes;
+CREATE TABLE personajes_d (
+  nombre VARCHAR(50) PRIMARY KEY
+);
+
+
+--QUIZ
+DELIMITER $$
+CREATE PROCEDURE estoy_frito()
+  BEGIN
+    DECLARE 
+    DECLARE nom VARCHAR(50)
+
+    SELECT FROM got WHERE nombre ='%W'
+
+CREATE TABLE no_estoy_frito (
+  nombre VARCHAR(50) PRIMARY KEY
+)
